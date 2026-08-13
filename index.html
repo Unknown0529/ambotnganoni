@@ -1,20 +1,16 @@
 <!DOCTYPE html>
-<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
 
   <!-- 🛠️ Added these lines to hide preview when sharing link -->
   <meta name="description" content="">
-  <meta property="og:title" content="pindota lods 💌">
+  <meta property="og:title" content="pindota pls 💌">
   <meta property="og:description" content="">
-  <meta name="twitter:title" content="pindota lods 💌">
+  <meta name="twitter:title" content="pindota pls 💌">
   <meta name="twitter:description" content="">
 
-  <title>pindota lods 💌</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Envelope — Letter Slide Out</title>
+  <title>pindota pls 💌</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
   <style>
     body {
@@ -39,42 +35,13 @@
       transform: translate(-50%, -50%);
       z-index: -1;
       filter: brightness(0.45);
-    :root{
-      --env-w: 700px;
-      --env-h: 500px;
-      --paper-w: calc(var(--env-w) * 0.86);
-      --paper-h: calc(var(--env-h) * 0.62);
-      --accent1: #ff857a;
-      --accent2: #ff6f61;
-    }
-
-    html,body{
-      height:100%;
-      margin:0;
-      background:#000; /* keep the dark background like original */
-      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      display:flex;
-      align-items:center;
-      justify-content:center;
     }
 
     /* ✉️ Envelope - rectangle look */
     .envelope {
-    .scene{
-      width: var(--env-w);
-      height: var(--env-h);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      perspective: 1200px; /* for flap 3D */
-      position:relative;
-    }
-
-    /* Envelope container */
-    .envelope{
-      width: 420px;               /* final visual size */
-      height: 300px;
       position: relative;
+      width: 360px;
+      height: 220px;
       width: 700px;
       height: 500px;
       background: linear-gradient(145deg, #ff857a, #ff6f61);
@@ -83,47 +50,14 @@
       cursor: pointer;
       overflow: hidden;
       transition: transform 0.4s ease;
-      transform-style: preserve-3d;
-      --bg: linear-gradient(145deg, var(--accent1), var(--accent2));
-      filter: drop-shadow(0 12px 30px rgba(0,0,0,0.6));
-    }
-
-    /* Envelope back (main body) */
-    .env-body{
-      width:100%;
-      height:70%;
-      background: var(--bg);
-      border-radius: 14px;
-      position: absolute;
-      bottom:0;
-      left:0;
-      overflow: hidden; /* hides the tucked letter */
-      box-shadow: inset 0 -6px 12px rgba(0,0,0,0.15);
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding-top: 28px; /* space at top where the letter sits inside */
     }
 
     .envelope:hover {
       transform: scale(1.03);
-    /* Decorative inner paper notch or trim */
-    .env-body::before{
-      content:"";
-      position:absolute;
-      inset:auto 12px 12px 12px;
-      height: 36px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.06);
     }
 
     /* 🔺 Flap (top triangle) */
     .flap {
-    /* Flap (top) */
-    .flap{
-      width:100%;
-      height:55%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
       position: absolute;
       top: 0;
       left: 0;
@@ -138,43 +72,6 @@
 
     /* 💌 Letter inside */
     .letter {
-      top:0;
-      left:0;
-      border-top-left-radius:14px;
-      border-top-right-radius:14px;
-      transform-origin: top center;
-      transform: rotateX(0deg);
-      backface-visibility: hidden;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:30; /* sits above body until we open */
-      pointer-events: none;
-    }
-
-    /* Flap triangle look using pseudo element */
-    .flap::after{
-      content:"";
-      position:absolute;
-      bottom:-10px;
-      left:50%;
-      transform:translateX(-50%) rotate(45deg);
-      width:120%;
-      height:120%;
-      border-radius:0 0 10px 10px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.02));
-      z-index:-1;
-    }
-
-    /* Letter (paper) */
-    .letter{
-      width: calc(100% - 48px);
-      max-width: var(--paper-w);
-      height: var(--paper-h);
-      background: linear-gradient(180deg, #fff, #fcfcfc);
-      border-radius: 6px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       position: absolute;
       top: 100%;
       left: 50%;
@@ -208,16 +105,6 @@
       font-size: 28px;
       color: #b23a48;
       margin: 0 0 10px 0;
-      transform: translateX(-50%) translateY(10%); /* tucked inside */
-      bottom: 10%; /* relative to envelope container */
-      padding: 28px 32px;
-      z-index: 10; /* below flap initially (flap has z-index:30) */
-      transition: transform 900ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms;
-      will-change: transform;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      overflow:auto;
     }
 
     .signature {
@@ -227,42 +114,15 @@
       font-style: italic;
       margin-top: 15px;
       font-size: 38px;
-    /* When open: flap rotates back and letter moves up and above flap */
-    .envelope.open .flap{
-      transform: rotateX(-160deg);
-      transition: transform 700ms cubic-bezier(.2,.9,.2,1) 0ms;
-      z-index:10; /* push the flap visually under when open so letter appears on top */
     }
 
     /* 💗 Open state */
     .envelope.open .flap {
       transform: rotateX(180deg);
-    .envelope.open .letter{
-      transform: translateX(-50%) translateY(-140%);
-      z-index: 60; /* letter above flap */
-      box-shadow: 0 22px 40px rgba(0,0,0,0.45);
-      transition: transform 900ms cubic-bezier(.2,.9,.2,1) 200ms, box-shadow 300ms;
     }
 
     .envelope.open .letter {
       top: 8%;
-    /* Little stamp / heart on envelope */
-    .stamp{
-      position:absolute;
-      right:18px;
-      bottom: 40px;
-      width:56px;
-      height:40px;
-      border-radius:6px;
-      background:rgba(255,255,255,0.12);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-      font-weight:600;
-      z-index:40;
-      transform: rotate(-6deg);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
 
     /* ❤️ Floating Hearts */
@@ -272,45 +132,11 @@
       font-size: 22px;
       animation: float 4s linear infinite;
       opacity: 0.8;
-    /* Letter inner content styles (feel free to edit) */
-    .letter h1{
-      margin:0;
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      color:#111;
-      letter-spacing: -0.02em;
-    }
-    .letter p{
-      margin:0;
-      color:#333;
-      line-height:1.45;
-      font-size: 15px;
     }
 
     @keyframes float {
       0% { transform: translateY(0) scale(1); opacity: 1; }
       100% { transform: translateY(-600px) scale(1.5); opacity: 0; }
-    /* Open button (for keyboard access) */
-    .controls{
-      position:absolute;
-      top: calc(100% + 16px);
-      left:50%;
-      transform:translateX(-50%);
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:center;
-      width:100%;
-    }
-    button{
-      -webkit-appearance:none;
-      border:0;
-      padding:10px 16px;
-      border-radius:10px;
-      background: linear-gradient(180deg,#fff,#f3f3f3);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-      cursor:pointer;
-      font-weight:600;
     }
 
     /* 📱 Responsive */
@@ -326,16 +152,10 @@
       .letter h3 {
         font-size: 54px;
       }
-    /* small responsive scaling */
-    @media (max-width:520px){
-      .scene{ transform: scale(0.84); }
     }
   </style>
 </head>
 <body>
-  <div class="scene" aria-hidden="false">
-    <div class="envelope" id="envelope" aria-label="Animated envelope with letter">
-      <div class="flap" aria-hidden="true"></div>
 
   <!-- 🎥 Background Video -->
   <video id="bg-video" autoplay muted loop playsinline>
@@ -348,7 +168,7 @@
     <div class="letter" id="letter">
       <h3>Dear Shaira,</h3>
       <p>
-        i just wanted to tell you nga crush gihapon tika until now—i guess 2 years na tika nga crush, shai.  
+        i just wanted to tell you nga crush gihapon tika until now and i guess almost 2 years na tika nga crush, shai.  
         <br><br>
         my feelings for you haven’t changed since the time i started liking you, back in 10th grade. i just can't make decisions and move forward until walay closure usab jud.  
         <br><br>
@@ -363,30 +183,14 @@
         i’ll accept whatever decision you make — i just need clarity. 💕
       </p>
       <p class="signature">– from someone who still admires you 💗</p>
-      <div class="env-body" aria-hidden="true">
-        <!-- Letter sits inside the body; sliding is handled by transform -->
-        <div class="letter" id="letter" role="document" aria-label="Letter content">
-          <h1>pindota pls 💌</h1>
-          <p>Hello —</p>
-          <p>This is the message tucked inside the envelope. Click the envelope to open and slide the paper up. You can replace this text with your own message, images, or HTML content.</p>
-          <p>— with ♥</p>
-        </div>
-      </div>
-
-      <div class="stamp" aria-hidden="true">❤</div>
     </div>
   </div>
-   
+
 
   <!-- 🎵 Background Music -->
   <audio id="bg-music" loop>
     <source src="https://res.cloudinary.com/dithz3pcp/video/upload/v1759680311/burnout_ya25vl.mp3" type="audio/mpeg">
   </audio>
-    <div class="controls" style="width:420px">
-      <button id="toggleBtn" aria-controls="envelope">Open</button>
-      <button id="resetBtn" aria-controls="envelope">Reset</button>
-    </div>
-  </div>
 
   <script>
     const envelope = document.getElementById('envelope');
@@ -403,20 +207,6 @@
         music.play().catch(err => console.log("Autoplay blocked:", err));
       } else {
         music.pause();
-    (function(){
-      const envelope = document.getElementById('envelope');
-      const toggleBtn = document.getElementById('toggleBtn');
-      const resetBtn = document.getElementById('resetBtn');
-
-      function openEnvelope(){
-        envelope.classList.add('open');
-        toggleBtn.textContent = 'Opened';
-        toggleBtn.disabled = true;
-      }
-      function resetEnvelope(){
-        envelope.classList.remove('open');
-        toggleBtn.textContent = 'Open';
-        toggleBtn.disabled = false;
       }
     });
 
@@ -432,18 +222,6 @@
       setTimeout(() => heart.remove(), 4000);
     }
     setInterval(createHeart, 600);
-
-      // click the envelope to open (also keyboard accessible via button)
-      envelope.addEventListener('click', () => {
-        if(!envelope.classList.contains('open')) openEnvelope();
-      });
-
-      toggleBtn.addEventListener('click', openEnvelope);
-      resetBtn.addEventListener('click', resetEnvelope);
-
-      // Optional: open automatically on load (uncomment if desired)
-      // window.addEventListener('load', () => setTimeout(openEnvelope, 700));
-    })();
   </script>
 </body>
 </html>
