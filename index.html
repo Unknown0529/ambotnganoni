@@ -11,7 +11,7 @@
   <meta name="twitter:description" content="">
 
   <title>pindota lods 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+  <link href="https://googleapis.com" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -37,18 +37,16 @@
       filter: brightness(0.45);
     }
 
-    /* ✉️ Envelope - rectangle look */
+    /* ✉️ Envelope - container box */
     .envelope {
       position: relative;
-      width: 360px;
-      height: 220px;
       width: 700px;
       height: 500px;
-      background: linear-gradient(145deg, #ff857a, #ff6f61);
+      background: linear-gradient(145deg, #e05346, #c94438); 
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       cursor: pointer;
-      overflow: hidden;
+      overflow: visible; 
       transition: transform 0.4s ease;
     }
 
@@ -66,29 +64,44 @@
       background: #e85a4f;
       clip-path: polygon(0 0, 100% 0, 50% 55%);
       transform-origin: top;
-      transition: transform 0.6s ease;
-      z-index: 2;
+      transition: transform 0.5s ease;
+      z-index: 4; 
+    }
+
+    /* 🛠️ Front Pocket Panel */
+    .envelope::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #ff857a, #ff6f61);
+      border-radius: 20px;
+      z-index: 3; 
+      pointer-events: none;
     }
 
     /* 💌 Letter inside */
     .letter {
       position: absolute;
-      top: 100%;
+      top: 12%; /* Starts tucked nicely inside the pocket */
       left: 50%;
       transform: translateX(-50%);
       width: 92%;
       height: 85%;
       background: #fff;
       border-radius: 22px;
-      padding: 20px;
+      padding: 40px;
       box-sizing: border-box;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-      font-size: 16px;
+      font-size: 18px;
       color: #333;
       line-height: 1.6;
-      overflow-y: auto; /* ✅ allows scrolling */
-      transition: top 0.7s ease;
-      z-index: 1;
+      overflow-y: auto; 
+      /* 🛠️ Slower, more natural mechanical transition curves for pulling out */
+      transition: top 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease, width 0.6s ease, height 0.6s ease;
+      z-index: 2; 
       scroll-behavior: smooth;
     }
 
@@ -102,9 +115,9 @@
 
     .letter h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 28px;
+      font-size: 32px;
       color: #b23a48;
-      margin: 0 0 10px 0;
+      margin: 0 0 15px 0;
     }
 
     .signature {
@@ -112,17 +125,32 @@
       color: #b45f5f;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      margin-top: 15px;
+      margin-top: 25px;
       font-size: 38px;
     }
 
-    /* 💗 Open state */
+    /* 💗 Open state animations */
     .envelope.open .flap {
       transform: rotateX(180deg);
+      z-index: 1; 
     }
 
+    /* 🛠️ STEP 1: The letter slides straight UP out of the top fold smoothly first */
     .envelope.open .letter {
-      top: 8%;
+      top: -75%; 
+      z-index: 5;
+    }
+
+    /* 🛠️ STEP 2: The JavaScript handles adding this after a tiny delay, bringing it beautifully to the screen center */
+    .letter.centered {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(1.03) !important;
+      width: 650px;
+      height: 550px;
+      z-index: 999 !important;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     }
 
     /* ❤️ Floating Hearts */
@@ -132,6 +160,7 @@
       font-size: 22px;
       animation: float 4s linear infinite;
       opacity: 0.8;
+      z-index: 6;
     }
 
     @keyframes float {
@@ -139,18 +168,28 @@
       100% { transform: translateY(-600px) scale(1.5); opacity: 0; }
     }
 
-    /* 📱 Responsive */
-    @media (max-width: 1000px) {
+    /* 📱 Responsive styling fixes for mobile viewports */
+    @media (max-width: 768px) {
       .envelope {
-        width: 700px;
-        height: 500px;
+        width: 90%;
+        height: 320px;
       }
       .letter {
-        font-size: 35px;
-        padding: 16px;
+        font-size: 16px;
+        padding: 25px;
       }
       .letter h3 {
-        font-size: 54px;
+        font-size: 26px;
+      }
+      .signature {
+        font-size: 28px;
+      }
+      .envelope.open .letter {
+        top: -85%;
+      }
+      .letter.centered {
+        width: 92vw !important;
+        height: 75vh !important;
       }
     }
   </style>
@@ -159,7 +198,7 @@
 
   <!-- 🎥 Background Video -->
   <video id="bg-video" autoplay muted loop playsinline>
-    <source src="https://res.cloudinary.com/dithz3pcp/video/upload/romantic-bg_bcyne3.mp4" type="video/mp4">
+    <source src="https://cloudinary.com" type="video/mp4">
   </video>
 
   <!-- ✉️ Envelope -->
@@ -186,14 +225,14 @@
     </div>
   </div>
 
-
   <!-- 🎵 Background Music -->
   <audio id="bg-music" loop>
-    <source src="https://res.cloudinary.com/dithz3pcp/video/upload/v1759680311/burnout_ya25vl.mp3" type="audio/mpeg">
+    <source src="https://cloudinary.com" type="audio/mpeg">
   </audio>
 
   <script>
     const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
     const music = document.getElementById('bg-music');
     const video = document.getElementById('bg-video');
 
@@ -203,10 +242,21 @@
 
     envelope.addEventListener('click', () => {
       envelope.classList.toggle('open');
+      
       if (envelope.classList.contains('open')) {
         music.play().catch(err => console.log("Autoplay blocked:", err));
+        
+        // 🛠️ NEW: Wait for the letter to smoothly slide UP out of the physical flap first (450ms)
+        // Then apply the centering layout phase!
+        setTimeout(() => {
+          if (envelope.classList.contains('open')) {
+            letter.classList.add('centered');
+          }
+        }, 450);
+
       } else {
         music.pause();
+        letter.classList.remove('centered');
       }
     });
 
