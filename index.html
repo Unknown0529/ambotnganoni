@@ -3,50 +3,72 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- 🛠️ Added these lines to hide preview when sharing link -->
-  <meta name="description" content="">
-  <meta property="og:title" content="pindota lods 💌">
-  <meta property="og:description" content="">
-  <meta name="twitter:title" content="pindota lods 💌">
-  <meta name="twitter:description" content="">
-
   <title>pindota lods 💌</title>
-  <link href="https://googleapis.com" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap"
+    rel="stylesheet"
+  >
+
   <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       height: 100vh;
+
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: Georgia, 'Times New Roman', Times, serif;
+
+      font-family: Georgia, "Times New Roman", Times, serif;
+
       overflow: hidden;
+
       background: black;
     }
 
-    /* 🎥 Background Video */
+
+    /* =========================
+       BACKGROUND VIDEO
+    ========================= */
+
     #bg-video {
       position: fixed;
+
       top: 50%;
       left: 50%;
+
       width: 100%;
       height: 100%;
+
       object-fit: cover;
+
       transform: translate(-50%, -50%);
+
       z-index: -1;
+
       filter: brightness(0.45);
     }
 
-    /* ✉️ Envelope - container box */
+
+    /* =========================
+       ENVELOPE
+    ========================= */
+
     .envelope {
       position: relative;
+
       width: 700px;
       height: 500px;
-      background: linear-gradient(145deg, #e05346, #c94438); 
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+
       cursor: pointer;
-      overflow: visible; 
+
+      overflow: visible;
+
       transition: transform 0.4s ease;
     }
 
@@ -54,224 +76,576 @@
       transform: scale(1.03);
     }
 
-    /* 🔺 Flap (top triangle) */
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #e85a4f;
-      clip-path: polygon(0 0, 100% 0, 50% 55%);
-      transform-origin: top;
-      transition: transform 0.5s ease;
-      z-index: 4; 
-    }
 
-    /* 🛠️ Front Pocket Panel */
-    .envelope::after {
-      content: '';
+    /* =================================================
+       LAYER 1 — BACK
+    ================================================= */
+
+    .back {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(145deg, #ff857a, #ff6f61);
+
+      inset: 0;
+
+      background: linear-gradient(
+        145deg,
+        #e05346,
+        #c94438
+      );
+
       border-radius: 20px;
-      z-index: 3; 
-      pointer-events: none;
+
+      z-index: 1;
     }
 
-    /* 💌 Letter inside */
+
+    /* =================================================
+       LAYER 2 — LETTER
+    ================================================= */
+
     .letter {
       position: absolute;
-      top: 12%; /* Starts tucked nicely inside the pocket */
+
       left: 50%;
+
+      /*
+        START INSIDE ENVELOPE
+      */
+      top: 7%;
+
+      width: 85%;
+      height: 75%;
+
       transform: translateX(-50%);
-      width: 92%;
-      height: 85%;
-      background: #fff;
-      border-radius: 22px;
+
+      background: white;
+
+      border-radius:
+        35px 35px
+        10px 10px;
+
       padding: 40px;
-      box-sizing: border-box;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-      font-size: 18px;
+
+      box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.25);
+
+      font-size: 35px;
+
       color: #333;
+
       line-height: 1.6;
-      overflow-y: auto; 
-      /* 🛠️ Slower, more natural mechanical transition curves for pulling out */
-      transition: top 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s ease, width 0.6s ease, height 0.6s ease;
-      z-index: 2; 
-      scroll-behavior: smooth;
+
+      overflow-y: auto;
+
+      /*
+        HIDDEN WHILE CLOSED
+      */
+      opacity: 0;
+
+      visibility: hidden;
+
+      z-index: 2;
+
+      transition:
+        top 1.2s cubic-bezier(.22, 1, .36, 1),
+        opacity 0.4s ease;
     }
 
-    .letter::-webkit-scrollbar {
-      width: 6px;
-    }
-    .letter::-webkit-scrollbar-thumb {
-      background: #ff6f61;
-      border-radius: 20px;
-    }
 
-    .letter h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px;
-      color: #b23a48;
-      margin: 0 0 15px 0;
-    }
+    /* =================================================
+       LAYER 3 — FRONT V-FOLD
+    ================================================= */
 
-    .signature {
-      text-align: right;
-      color: #b45f5f;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      margin-top: 25px;
-      font-size: 38px;
-    }
-
-    /* 💗 Open state animations */
-    .envelope.open .flap {
-      transform: rotateX(180deg);
-      z-index: 1; 
-    }
-
-    /* 🛠️ STEP 1: The letter slides straight UP out of the top fold smoothly first */
-    .envelope.open .letter {
-      top: -75%; 
-      z-index: 5;
-    }
-
-    /* 🛠️ STEP 2: The JavaScript handles adding this after a tiny delay, bringing it beautifully to the screen center */
-    .letter.centered {
-      position: fixed !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) scale(1.03) !important;
-      width: 650px;
-      height: 550px;
-      z-index: 999 !important;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-    }
-
-    /* ❤️ Floating Hearts */
-    .heart {
+    .front-fold {
       position: absolute;
-      color: #ff3366;
-      font-size: 22px;
-      animation: float 4s linear infinite;
-      opacity: 0.8;
+
+      left: 0;
+      bottom: 0;
+
+      width: 100%;
+      height: 58%;
+
+      background: linear-gradient(
+        145deg,
+        #ff766b,
+        #e85a4f
+      );
+
+      clip-path: polygon(
+        0 0,
+        50% 100%,
+        100% 0,
+        100% 100%,
+        0 100%
+      );
+
+      border-radius:
+        0 0
+        20px 20px;
+
+      z-index: 4;
+    }
+
+
+    /* =================================================
+       LAYER 4 — TOP TRIANGLE
+    ================================================= */
+
+    .flap {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 58%;
+
+      background: linear-gradient(
+        145deg,
+        #e85a4f,
+        #d94a41
+      );
+
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%
+      );
+
+      z-index: 5;
+
+      transition:
+        transform 0.8s
+        cubic-bezier(.4, 0, .2, 1),
+
+        opacity 0.4s ease;
+    }
+
+
+    /* =================================================
+       OPEN
+       LETTER COMES OUT THEN STOPS AT CENTER
+    ================================================= */
+
+    .envelope.open .flap {
+      /*
+        Move top flap away
+      */
+      transform: translateY(-100%);
+
+      opacity: 0;
+    }
+
+
+    .envelope.open .letter {
+      /*
+        The letter comes OUT of the envelope
+        and stops around the center.
+
+        NOT outside the screen.
+      */
+
+      top: -125px;
+
+      opacity: 1;
+
+      visibility: visible;
+
       z-index: 6;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-600px) scale(1.5); opacity: 0; }
+
+    /* =================================================
+       SCROLLBAR
+    ================================================= */
+
+    .letter::-webkit-scrollbar {
+      width: 7px;
     }
 
-    /* 📱 Responsive styling fixes for mobile viewports */
+    .letter::-webkit-scrollbar-track {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .letter::-webkit-scrollbar-thumb {
+      background: #ff6f61;
+
+      border-radius: 85px;
+    }
+
+
+    /* =================================================
+       TITLE
+    ================================================= */
+
+    .letter h3 {
+      font-family:
+        "Playfair Display",
+        serif;
+
+      font-size: 50px;
+
+      color: #b45f5f;
+
+      margin: 0 0 15px 0;
+    }
+
+
+    /* =================================================
+       SIGNATURE
+    ================================================= */
+
+    .signature {
+      text-align: right;
+
+      color: #b45f5f;
+
+      font-family:
+        "Playfair Display",
+        serif;
+
+      font-style: italic;
+
+      margin-top: 25px;
+
+      font-size: 30px;
+    }
+
+
+    /* =================================================
+       FLOATING HEARTS
+    ================================================= */
+
+    .heart {
+      position: absolute;
+
+      color: #ff3366;
+
+      font-size: 22px;
+
+      animation:
+        float 4s linear infinite;
+
+      opacity: 0.8;
+
+      z-index: 10;
+
+      pointer-events: none;
+    }
+
+
+    @keyframes float {
+
+      0% {
+        transform:
+          translateY(0)
+          scale(1);
+
+        opacity: 1;
+      }
+
+      100% {
+        transform:
+          translateY(-600px)
+          scale(1.5);
+
+        opacity: 0;
+      }
+    }
+
+
+    /* =================================================
+       MOBILE
+    ================================================= */
+
     @media (max-width: 768px) {
+
       .envelope {
         width: 90%;
         height: 320px;
       }
+
       .letter {
         font-size: 16px;
+
         padding: 25px;
+
+        border-radius:
+          25px 25px
+          8px 8px;
       }
+
       .letter h3 {
         font-size: 26px;
       }
+
       .signature {
         font-size: 28px;
       }
+
+      /*
+        Letter comes out and stops
+        near the center on mobile.
+      */
       .envelope.open .letter {
-        top: -85%;
+        top: -110px;
       }
-      .letter.centered {
-        width: 92vw !important;
-        height: 75vh !important;
-      }
+
     }
+
   </style>
 </head>
+
+
 <body>
 
-  <!-- 🎥 Background Video -->
-  <video id="bg-video" autoplay muted loop playsinline>
-    <source src="https://cloudinary.com" type="video/mp4">
+
+  <!-- =========================
+       BACKGROUND VIDEO
+  ========================= -->
+
+  <video
+    id="bg-video"
+    autoplay
+    muted
+    loop
+    playsinline
+  >
+
+    <source
+      src="https://cloudinary.com"
+      type="video/mp4"
+    >
+
   </video>
 
-  <!-- ✉️ Envelope -->
-  <div class="envelope" id="envelope">
-    <div class="flap"></div>
-    <div class="letter" id="letter">
-      <h3>Dear Shaira,</h3>
+
+  <!-- =========================
+       ENVELOPE
+       EXACTLY 4 LAYERS
+  ========================= -->
+
+  <div
+    class="envelope"
+    id="envelope"
+  >
+
+
+    <!-- LAYER 1 -->
+    <div class="back"></div>
+
+
+    <!-- LAYER 2 -->
+    <div
+      class="letter"
+      id="letter"
+    >
+
+      <h3>
+        Dear Shaira,
+      </h3>
+
+
       <p>
-        i just wanted to tell you nga crush gihapon tika until now and i guess almost 2 years na tika nga crush, shai.  
+
+        i just wanted to tell you nga
+        crush gihapon tika until now
+        and i guess almost 2 years na
+        tika nga crush, shai.
+
         <br><br>
-        my feelings for you haven’t changed since the time i started liking you, back in 10th grade. i just can't make decisions and move forward until walay closure usab jud.  
+
+        my feelings for you haven’t changed
+        since the time i started liking you,
+        back in 10th grade. i just can't make
+        decisions and move forward until
+        walay closure usab jud.
+
         <br><br>
-        what I'm hoping for is an answer from you — whether you’re already seeing someone or if this is simply closure between the two of us again.  
+
+        what I'm hoping for is an answer
+        from you — whether you’re already
+        seeing someone or if this is simply
+        closure between the two of us again.
+
         <br><br>
-        the truth is, i can’t treat our friendship purely as platonic gyud.  
-        siguro, maundang na nako ang paghatag ug meaning sa tanan if ever ma-reject balik.  
+
+        the truth is, i can’t treat our
+        friendship purely as platonic gyud.
+
+        siguro, maundang na nako ang
+        paghatag ug meaning sa tanan
+        if ever ma-reject balik.
+
         <br><br>
-        sorry if tungod sakong ka-delusional, maapektohan nasad ka or what we have now.  
-        knowing your response is super crucial for me, shai.  
+
+        sorry if tungod sakong ka-delusional,
+        maapektohan nasad ka or what we
+        have now.
+
+        knowing your response is super
+        crucial for me, shai.
+
         <br><br>
-        i’ll accept whatever decision you make — i just need clarity. 💕
+
+        i’ll accept whatever decision
+        you make — i just need clarity. 💕
+
       </p>
-      <p class="signature">– from someone who still admires you 💗</p>
+
+
+      <p class="signature">
+        – from someone who still admires you 💗
+      </p>
+
     </div>
+
+
+    <!-- LAYER 3 -->
+    <div class="front-fold"></div>
+
+
+    <!-- LAYER 4 -->
+    <div class="flap"></div>
+
+
   </div>
 
-  <!-- 🎵 Background Music -->
-  <audio id="bg-music" loop>
-    <source src="https://cloudinary.com" type="audio/mpeg">
+
+  <!-- =========================
+       MUSIC
+  ========================= -->
+
+  <audio
+    id="bg-music"
+    loop
+  >
+
+    <source
+      src="https://cloudinary.com"
+      type="audio/mpeg"
+    >
+
   </audio>
 
+
   <script>
-    const envelope = document.getElementById('envelope');
-    const letter = document.getElementById('letter');
-    const music = document.getElementById('bg-music');
-    const video = document.getElementById('bg-video');
 
-    window.addEventListener('load', () => {
-      video.play().catch(err => console.log("Autoplay blocked:", err));
-    });
+    const envelope =
+      document.getElementById("envelope");
 
-    envelope.addEventListener('click', () => {
-      envelope.classList.toggle('open');
-      
-      if (envelope.classList.contains('open')) {
-        music.play().catch(err => console.log("Autoplay blocked:", err));
-        
-        // 🛠️ NEW: Wait for the letter to smoothly slide UP out of the physical flap first (450ms)
-        // Then apply the centering layout phase!
-        setTimeout(() => {
-          if (envelope.classList.contains('open')) {
-            letter.classList.add('centered');
+    const music =
+      document.getElementById("bg-music");
+
+    const video =
+      document.getElementById("bg-video");
+
+
+    /* =========================
+       VIDEO
+    ========================= */
+
+    window.addEventListener(
+      "load",
+      () => {
+
+        video.play().catch(
+          err => {
+
+            console.log(
+              "Autoplay blocked:",
+              err
+            );
+
           }
-        }, 450);
+        );
 
-      } else {
-        music.pause();
-        letter.classList.remove('centered');
       }
-    });
+    );
 
-    // Floating hearts animation
+
+    /* =========================
+       OPEN / CLOSE
+    ========================= */
+
+    envelope.addEventListener(
+      "click",
+      () => {
+
+        envelope.classList.toggle("open");
+
+
+        if (
+          envelope.classList.contains("open")
+        ) {
+
+          music.play().catch(
+            err => {
+
+              console.log(
+                "Music autoplay blocked:",
+                err
+              );
+
+            }
+          );
+
+        } else {
+
+          music.pause();
+
+        }
+
+      }
+    );
+
+
+    /* =========================
+       FLOATING HEARTS
+    ========================= */
+
     function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
+
+      const heart =
+        document.createElement("div");
+
+      heart.classList.add("heart");
+
       heart.innerHTML = "❤";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = window.innerHeight + "px";
-      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
+
+      heart.style.left =
+        Math.random() *
+        window.innerWidth +
+        "px";
+
+      heart.style.top =
+        window.innerHeight +
+        "px";
+
+      heart.style.fontSize =
+        (
+          Math.random() * 20 + 15
+        ) + "px";
+
+      document.body.appendChild(
+        heart
+      );
+
+      setTimeout(
+        () => {
+          heart.remove();
+        },
+        4000
+      );
     }
-    setInterval(createHeart, 600);
+
+
+    setInterval(
+      createHeart,
+      600
+    );
+
   </script>
+
 </body>
 </html>
