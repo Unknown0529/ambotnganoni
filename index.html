@@ -3,72 +3,50 @@
 <head>
   <meta charset="UTF-8">
 
-  <title>pindota lods 💌</title>
+  <!-- 🛠️ Added these lines to hide preview when sharing link -->
+  <meta name="description" content="">
+  <meta property="og:title" content="pindota pls 💌">
+  <meta property="og:description" content="">
+  <meta name="twitter:title" content="pindota pls 💌">
+  <meta name="twitter:description" content="">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap"
-    rel="stylesheet"
-  >
-
+  <title>pindota pls 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
   <style>
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       height: 100vh;
-
       display: flex;
       justify-content: center;
       align-items: center;
-
-      font-family: Georgia, "Times New Roman", Times, serif;
-
+      font-family: Georgia, 'Times New Roman', Times, serif;
       overflow: hidden;
-
       background: black;
     }
 
-
-    /* =========================
-       BACKGROUND VIDEO
-    ========================= */
-
+    /* 🎥 Background Video */
     #bg-video {
       position: fixed;
-
       top: 50%;
       left: 50%;
-
       width: 100%;
       height: 100%;
-
       object-fit: cover;
-
       transform: translate(-50%, -50%);
-
       z-index: -1;
-
       filter: brightness(0.45);
     }
 
-
-    /* =========================
-       ENVELOPE
-    ========================= */
-
+    /* ✉️ Envelope - rectangle look */
     .envelope {
       position: relative;
-
       width: 700px;
       height: 500px;
-
+      background: linear-gradient(145deg, #ff857a, #ff6f61);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       cursor: pointer;
-
-      overflow: visible;
-
+      overflow: hidden;
       transition: transform 0.4s ease;
     }
 
@@ -76,576 +54,172 @@
       transform: scale(1.03);
     }
 
-
-    /* =================================================
-       LAYER 1 — BACK
-    ================================================= */
-
-    .back {
-      position: absolute;
-
-      inset: 0;
-
-      background: linear-gradient(
-        145deg,
-        #e05346,
-        #c94438
-      );
-
-      border-radius: 20px;
-
-      z-index: 1;
-    }
-
-
-    /* =================================================
-       LAYER 2 — LETTER
-    ================================================= */
-
-    .letter {
-      position: absolute;
-
-      left: 50%;
-
-      /*
-        START INSIDE ENVELOPE
-      */
-      top: 7%;
-
-      width: 85%;
-      height: 75%;
-
-      transform: translateX(-50%);
-
-      background: white;
-
-      border-radius:
-        35px 35px
-        10px 10px;
-
-      padding: 40px;
-
-      box-shadow:
-        0 5px 18px rgba(0, 0, 0, 0.25);
-
-      font-size: 35px;
-
-      color: #333;
-
-      line-height: 1.6;
-
-      overflow-y: auto;
-
-      /*
-        HIDDEN WHILE CLOSED
-      */
-      opacity: 0;
-
-      visibility: hidden;
-
-      z-index: 2;
-
-      transition:
-        top 1.2s cubic-bezier(.22, 1, .36, 1),
-        opacity 0.4s ease;
-    }
-
-
-    /* =================================================
-       LAYER 3 — FRONT V-FOLD
-    ================================================= */
-
-    .front-fold {
-      position: absolute;
-
-      left: 0;
-      bottom: 0;
-
-      width: 100%;
-      height: 58%;
-
-      background: linear-gradient(
-        145deg,
-        #ff766b,
-        #e85a4f
-      );
-
-      clip-path: polygon(
-        0 0,
-        50% 100%,
-        100% 0,
-        100% 100%,
-        0 100%
-      );
-
-      border-radius:
-        0 0
-        20px 20px;
-
-      z-index: 4;
-    }
-
-
-    /* =================================================
-       LAYER 4 — TOP TRIANGLE
-    ================================================= */
-
+    /* 🔺 Flap (top triangle) */
     .flap {
       position: absolute;
-
       top: 0;
       left: 0;
-
       width: 100%;
-      height: 58%;
-
-      background: linear-gradient(
-        145deg,
-        #e85a4f,
-        #d94a41
-      );
-
-      clip-path: polygon(
-        0 0,
-        100% 0,
-        50% 100%
-      );
-
-      z-index: 5;
-
-      transition:
-        transform 0.8s
-        cubic-bezier(.4, 0, .2, 1),
-
-        opacity 0.4s ease;
+      height: 100%;
+      background: #e85a4f;
+      clip-path: polygon(0 0, 100% 0, 50% 55%);
+      transform-origin: top;
+      transition: transform 0.6s ease;
+      z-index: 2;
     }
 
-
-    /* =================================================
-       OPEN
-       LETTER COMES OUT THEN STOPS AT CENTER
-    ================================================= */
-
-    .envelope.open .flap {
-      /*
-        Move top flap away
-      */
-      transform: translateY(-100%);
-
-      opacity: 0;
+    /* 💌 Letter inside */
+    .letter {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      height: 85%;
+      background: #fff;
+      border-radius: 22px;
+      padding: 20px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+      font-size: 16px;
+      color: #333;
+      line-height: 1.6;
+      overflow-y: auto; /* ✅ allows scrolling */
+      transition: top 0.7s ease;
+      z-index: 1;
+      scroll-behavior: smooth;
     }
-
-
-    .envelope.open .letter {
-      /*
-        The letter comes OUT of the envelope
-        and stops around the center.
-
-        NOT outside the screen.
-      */
-
-      top: -125px;
-
-      opacity: 1;
-
-      visibility: visible;
-
-      z-index: 6;
-    }
-
-
-    /* =================================================
-       SCROLLBAR
-    ================================================= */
 
     .letter::-webkit-scrollbar {
-      width: 7px;
+      width: 6px;
     }
-
-    .letter::-webkit-scrollbar-track {
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
-
     .letter::-webkit-scrollbar-thumb {
       background: #ff6f61;
-
-      border-radius: 85px;
+      border-radius: 20px;
     }
-
-
-    /* =================================================
-       TITLE
-    ================================================= */
 
     .letter h3 {
-      font-family:
-        "Playfair Display",
-        serif;
-
-      font-size: 50px;
-
-      color: #b45f5f;
-
-      margin: 0 0 15px 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: #b23a48;
+      margin: 0 0 10px 0;
     }
-
-
-    /* =================================================
-       SIGNATURE
-    ================================================= */
 
     .signature {
       text-align: right;
-
       color: #b45f5f;
-
-      font-family:
-        "Playfair Display",
-        serif;
-
+      font-family: 'Playfair Display', serif;
       font-style: italic;
-
-      margin-top: 25px;
-
-      font-size: 30px;
+      margin-top: 15px;
+      font-size: 38px;
     }
 
+    /* 💗 Open state */
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
 
-    /* =================================================
-       FLOATING HEARTS
-    ================================================= */
+    .envelope.open .letter {
+      top: 8%;
+    }
 
+    /* ❤️ Floating Hearts */
     .heart {
       position: absolute;
-
       color: #ff3366;
-
       font-size: 22px;
-
-      animation:
-        float 4s linear infinite;
-
+      animation: float 4s linear infinite;
       opacity: 0.8;
-
-      z-index: 10;
-
-      pointer-events: none;
     }
-
 
     @keyframes float {
-
-      0% {
-        transform:
-          translateY(0)
-          scale(1);
-
-        opacity: 1;
-      }
-
-      100% {
-        transform:
-          translateY(-600px)
-          scale(1.5);
-
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-600px) scale(1.5); opacity: 0; }
     }
 
-
-    /* =================================================
-       MOBILE
-    ================================================= */
-
-    @media (max-width: 768px) {
-
+    /* 📱 Responsive */
+    @media (max-width: 1000px) {
       .envelope {
-        width: 90%;
-        height: 320px;
+        width: 700px;
+        height: 500px;
       }
-
       .letter {
-        font-size: 16px;
-
-        padding: 25px;
-
-        border-radius:
-          25px 25px
-          8px 8px;
+        font-size: 35px;
+        padding: 16px;
       }
-
       .letter h3 {
-        font-size: 26px;
+        font-size: 54px;
       }
-
-      .signature {
-        font-size: 28px;
-      }
-
-      /*
-        Letter comes out and stops
-        near the center on mobile.
-      */
-      .envelope.open .letter {
-        top: -110px;
-      }
-
     }
-
   </style>
 </head>
-
-
 <body>
 
-
-  <!-- =========================
-       BACKGROUND VIDEO
-  ========================= -->
-
-  <video
-    id="bg-video"
-    autoplay
-    muted
-    loop
-    playsinline
-  >
-
-    <source
-      src="https://cloudinary.com"
-      type="video/mp4"
-    >
-
+  <!-- 🎥 Background Video -->
+  <video id="bg-video" autoplay muted loop playsinline>
+    <source src="https://res.cloudinary.com/dithz3pcp/video/upload/romantic-bg_bcyne3.mp4" type="video/mp4">
   </video>
 
-
-  <!-- =========================
-       ENVELOPE
-       EXACTLY 4 LAYERS
-  ========================= -->
-
-  <div
-    class="envelope"
-    id="envelope"
-  >
-
-
-    <!-- LAYER 1 -->
-    <div class="back"></div>
-
-
-    <!-- LAYER 2 -->
-    <div
-      class="letter"
-      id="letter"
-    >
-
-      <h3>
-        Dear Shaira,
-      </h3>
-
-
-      <p>
-
-        i just wanted to tell you nga
-        crush gihapon tika until now
-        and i guess almost 2 years na
-        tika nga crush, shai.
-
-        <br><br>
-
-        my feelings for you haven’t changed
-        since the time i started liking you,
-        back in 10th grade. i just can't make
-        decisions and move forward until
-        walay closure usab jud.
-
-        <br><br>
-
-        what I'm hoping for is an answer
-        from you — whether you’re already
-        seeing someone or if this is simply
-        closure between the two of us again.
-
-        <br><br>
-
-        the truth is, i can’t treat our
-        friendship purely as platonic gyud.
-
-        siguro, maundang na nako ang
-        paghatag ug meaning sa tanan
-        if ever ma-reject balik.
-
-        <br><br>
-
-        sorry if tungod sakong ka-delusional,
-        maapektohan nasad ka or what we
-        have now.
-
-        knowing your response is super
-        crucial for me, shai.
-
-        <br><br>
-
-        i’ll accept whatever decision
-        you make — i just need clarity. 💕
-
-      </p>
-
-
-      <p class="signature">
-        – from someone who still admires you 💗
-      </p>
-
-    </div>
-
-
-    <!-- LAYER 3 -->
-    <div class="front-fold"></div>
-
-
-    <!-- LAYER 4 -->
+  <!-- ✉️ Envelope -->
+  <div class="envelope" id="envelope">
     <div class="flap"></div>
-
-
+    <div class="letter" id="letter">
+      <h3>Dear Shaira,</h3>
+      <p>
+        i just wanted to tell you nga crush gihapon tika until now and i guess almost 2 years na tika nga crush, shai.  
+        <br><br>
+        my feelings for you haven’t changed since the time i started liking you, back in 10th grade. i just can't make decisions and move forward until walay closure usab jud.  
+        <br><br>
+        what I'm hoping for is an answer from you — whether you’re already seeing someone or if this is simply closure between the two of us again.  
+        <br><br>
+        the truth is, i can’t treat our friendship purely as platonic gyud.  
+        siguro, maundang na nako ang paghatag ug meaning sa tanan if ever ma-reject balik.  
+        <br><br>
+        sorry if tungod sakong ka-delusional, maapektohan nasad ka or what we have now.  
+        knowing your response is super crucial for me, shai.  
+        <br><br>
+        i’ll accept whatever decision you make — i just need clarity. 💕
+      </p>
+      <p class="signature">– from someone who still admires you 💗</p>
+    </div>
   </div>
+   
 
-
-  <!-- =========================
-       MUSIC
-  ========================= -->
-
-  <audio
-    id="bg-music"
-    loop
-  >
-
-    <source
-      src="https://cloudinary.com"
-      type="audio/mpeg"
-    >
-
+  <!-- 🎵 Background Music -->
+  <audio id="bg-music" loop>
+    <source src="https://res.cloudinary.com/dithz3pcp/video/upload/v1759680311/burnout_ya25vl.mp3" type="audio/mpeg">
   </audio>
 
-
   <script>
+    const envelope = document.getElementById('envelope');
+    const music = document.getElementById('bg-music');
+    const video = document.getElementById('bg-video');
 
-    const envelope =
-      document.getElementById("envelope");
+    window.addEventListener('load', () => {
+      video.play().catch(err => console.log("Autoplay blocked:", err));
+    });
 
-    const music =
-      document.getElementById("bg-music");
-
-    const video =
-      document.getElementById("bg-video");
-
-
-    /* =========================
-       VIDEO
-    ========================= */
-
-    window.addEventListener(
-      "load",
-      () => {
-
-        video.play().catch(
-          err => {
-
-            console.log(
-              "Autoplay blocked:",
-              err
-            );
-
-          }
-        );
-
+    envelope.addEventListener('click', () => {
+      envelope.classList.toggle('open');
+      if (envelope.classList.contains('open')) {
+        music.play().catch(err => console.log("Autoplay blocked:", err));
+      } else {
+        music.pause();
       }
-    );
+    });
 
-
-    /* =========================
-       OPEN / CLOSE
-    ========================= */
-
-    envelope.addEventListener(
-      "click",
-      () => {
-
-        envelope.classList.toggle("open");
-
-
-        if (
-          envelope.classList.contains("open")
-        ) {
-
-          music.play().catch(
-            err => {
-
-              console.log(
-                "Music autoplay blocked:",
-                err
-              );
-
-            }
-          );
-
-        } else {
-
-          music.pause();
-
-        }
-
-      }
-    );
-
-
-    /* =========================
-       FLOATING HEARTS
-    ========================= */
-
+    // Floating hearts animation
     function createHeart() {
-
-      const heart =
-        document.createElement("div");
-
-      heart.classList.add("heart");
-
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
       heart.innerHTML = "❤";
-
-      heart.style.left =
-        Math.random() *
-        window.innerWidth +
-        "px";
-
-      heart.style.top =
-        window.innerHeight +
-        "px";
-
-      heart.style.fontSize =
-        (
-          Math.random() * 20 + 15
-        ) + "px";
-
-      document.body.appendChild(
-        heart
-      );
-
-      setTimeout(
-        () => {
-          heart.remove();
-        },
-        4000
-      );
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight + "px";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
     }
-
-
-    setInterval(
-      createHeart,
-      600
-    );
-
+    setInterval(createHeart, 600);
   </script>
-
 </body>
 </html>
